@@ -1,0 +1,20 @@
+{
+  "version": "20.0.0",
+  "files": {
+    "282870f483ff6bec473711ab7ca14019e5fd3d8a2abed9bfb75e392e72ca489a": {
+      "source": {
+        "path": "Cdkdemostack.template.json",
+        "packaging": "file"
+      },
+      "destinations": {
+        "456456010743-ca-central-1": {
+          "bucketName": "cdk-hnb659fds-assets-456456010743-ca-central-1",
+          "objectKey": "282870f483ff6bec473711ab7ca14019e5fd3d8a2abed9bfb75e392e72ca489a.json",
+          "region": "ca-central-1",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::456456010743:role/cdk-hnb659fds-file-publishing-role-456456010743-ca-central-1"
+        }
+      }
+    }
+  },
+  "dockerImages": {}
+}

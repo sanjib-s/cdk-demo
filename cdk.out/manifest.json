@@ -1,0 +1,166 @@
+{
+  "version": "20.0.0",
+  "artifacts": {
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    },
+    "Cdkdemostack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "Cdkdemostack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "Cdkdemostack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://456456010743/ca-central-1",
+      "properties": {
+        "templateFile": "Cdkdemostack.template.json",
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::456456010743:role/cdk-hnb659fds-deploy-role-456456010743-ca-central-1",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::456456010743:role/cdk-hnb659fds-cfn-exec-role-456456010743-ca-central-1",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-456456010743-ca-central-1/282870f483ff6bec473711ab7ca14019e5fd3d8a2abed9bfb75e392e72ca489a.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "Cdkdemostack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::456456010743:role/cdk-hnb659fds-lookup-role-456456010743-ca-central-1",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "Cdkdemostack.assets"
+      ],
+      "metadata": {
+        "/Cdkdemostack/CdkDemoQueue/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CdkDemoQueue32E7553B"
+          }
+        ],
+        "/Cdkdemostack/CdkDemoQueue/Policy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CdkDemoQueuePolicy23A7259B"
+          }
+        ],
+        "/Cdkdemostack/CdkDemoQueue/CdkdemostackCdkDemoTopicAB9B8AEB/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CdkDemoQueueCdkdemostackCdkDemoTopicAB9B8AEB62C13E41"
+          }
+        ],
+        "/Cdkdemostack/CdkDemoTopic/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CdkDemoTopicCFC15E4B"
+          }
+        ],
+        "/Cdkdemostack/sample-ec2": [
+          {
+            "type": "aws:cdk:error",
+            "data": "No AMI found that matched the search criteria",
+            "trace": [
+              "Annotations.addMessage (/Users/sanjibsaha/GIT-REPOS/cdk-demo/cdk-demo/node_modules/aws-cdk-lib/core/lib/annotations.js:1:1213)",
+              "Annotations.addError (/Users/sanjibsaha/GIT-REPOS/cdk-demo/cdk-demo/node_modules/aws-cdk-lib/core/lib/annotations.js:1:765)",
+              "Function.getValue (/Users/sanjibsaha/GIT-REPOS/cdk-demo/cdk-demo/node_modules/aws-cdk-lib/core/lib/context-provider.js:2:1160)",
+              "LookupMachineImage.getImage (/Users/sanjibsaha/GIT-REPOS/cdk-demo/cdk-demo/node_modules/aws-cdk-lib/aws-ec2/lib/machine-image.js:1:13368)",
+              "new Instance (/Users/sanjibsaha/GIT-REPOS/cdk-demo/cdk-demo/node_modules/aws-cdk-lib/aws-ec2/lib/instance.js:1:1617)",
+              "new CdkDemoStack (/Users/sanjibsaha/GIT-REPOS/cdk-demo/cdk-demo/lib/cdk-demo-stack.ts:22:24)",
+              "Object.<anonymous> (/Users/sanjibsaha/GIT-REPOS/cdk-demo/cdk-demo/bin/cdk-demo.ts:10:1)",
+              "Module._compile (node:internal/modules/cjs/loader:1126:14)",
+              "Module.m._compile (/Users/sanjibsaha/GIT-REPOS/cdk-demo/cdk-demo/node_modules/ts-node/src/index.ts:1618:23)",
+              "Module._extensions..js (node:internal/modules/cjs/loader:1180:10)",
+              "Object.require.extensions.<computed> [as .ts] (/Users/sanjibsaha/GIT-REPOS/cdk-demo/cdk-demo/node_modules/ts-node/src/index.ts:1621:12)",
+              "Module.load (node:internal/modules/cjs/loader:1004:32)",
+              "Function.Module._load (node:internal/modules/cjs/loader:839:12)",
+              "Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:81:12)",
+              "phase4 (/Users/sanjibsaha/GIT-REPOS/cdk-demo/cdk-demo/node_modules/ts-node/src/bin.ts:649:14)",
+              "bootstrap (/Users/sanjibsaha/GIT-REPOS/cdk-demo/cdk-demo/node_modules/ts-node/src/bin.ts:95:10)",
+              "main (/Users/sanjibsaha/GIT-REPOS/cdk-demo/cdk-demo/node_modules/ts-node/src/bin.ts:55:10)",
+              "Object.<anonymous> (/Users/sanjibsaha/GIT-REPOS/cdk-demo/cdk-demo/node_modules/ts-node/src/bin.ts:800:3)",
+              "Module._compile (node:internal/modules/cjs/loader:1126:14)",
+              "Object.Module._extensions..js (node:internal/modules/cjs/loader:1180:10)",
+              "Module.load (node:internal/modules/cjs/loader:1004:32)",
+              "Function.Module._load (node:internal/modules/cjs/loader:839:12)",
+              "Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:81:12)",
+              "node:internal/main/run_main_module:17:47"
+            ]
+          }
+        ],
+        "/Cdkdemostack/sample-ec2/InstanceSecurityGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "sampleec2InstanceSecurityGroup4DE8B944"
+          }
+        ],
+        "/Cdkdemostack/sample-ec2/InstanceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "sampleec2InstanceRole94E90210"
+          }
+        ],
+        "/Cdkdemostack/sample-ec2/InstanceProfile": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "sampleec2InstanceProfileB646EF37"
+          }
+        ],
+        "/Cdkdemostack/sample-ec2/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "sampleec2EF1A7D41"
+          }
+        ],
+        "/Cdkdemostack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/Cdkdemostack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/Cdkdemostack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "Cdkdemostack"
+    }
+  },
+  "missing": [
+    {
+      "key": "ami:account=456456010743:filters.image-type.0=machine:filters.name.0=ami-06c3426233c180fef:filters.state.0=available:region=ca-central-1",
+      "provider": "ami",
+      "props": {
+        "account": "456456010743",
+        "region": "ca-central-1",
+        "filters": {
+          "name": [
+            "ami-06c3426233c180fef"
+          ],
+          "state": [
+            "available"
+          ],
+          "image-type": [
+            "machine"
+          ]
+        },
+        "lookupRoleArn": "arn:${AWS::Partition}:iam::456456010743:role/cdk-hnb659fds-lookup-role-456456010743-ca-central-1"
+      }
+    }
+  ]
+}

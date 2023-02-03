@@ -18,9 +18,7 @@ export class CdkDemoStack extends Stack {
     topic.addSubscription(new subs.SqsSubscription(queue));
     
     const defaultvpc =ec2.Vpc.fromLookup(this, 'vpc',{isDefault: true})
-    const ami= new ec2.LookupMachineImage({name:'ZytbImg010422',
-               owners:[' 925975727637']
-    })
+    const ami= new ec2.LookupMachineImage({name:'ami-06c3426233c180fef'})
    const ec2instance = new ec2.Instance(this, 'sample-ec2', {instanceType:new ec2.InstanceType('t2.micro'),
                        machineImage:ami,vpc:defaultvpc})
   }

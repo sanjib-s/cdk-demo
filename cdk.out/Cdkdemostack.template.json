@@ -1,0 +1,217 @@
+{
+ "Resources": {
+  "CdkDemoQueue32E7553B": {
+   "Type": "AWS::SQS::Queue",
+   "Properties": {
+    "VisibilityTimeout": 300
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "Cdkdemostack/CdkDemoQueue/Resource"
+   }
+  },
+  "CdkDemoQueuePolicy23A7259B": {
+   "Type": "AWS::SQS::QueuePolicy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sqs:SendMessage",
+       "Condition": {
+        "ArnEquals": {
+         "aws:SourceArn": {
+          "Ref": "CdkDemoTopicCFC15E4B"
+         }
+        }
+       },
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "sns.amazonaws.com"
+       },
+       "Resource": {
+        "Fn::GetAtt": [
+         "CdkDemoQueue32E7553B",
+         "Arn"
+        ]
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Queues": [
+     {
+      "Ref": "CdkDemoQueue32E7553B"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "Cdkdemostack/CdkDemoQueue/Policy/Resource"
+   }
+  },
+  "CdkDemoQueueCdkdemostackCdkDemoTopicAB9B8AEB62C13E41": {
+   "Type": "AWS::SNS::Subscription",
+   "Properties": {
+    "Protocol": "sqs",
+    "TopicArn": {
+     "Ref": "CdkDemoTopicCFC15E4B"
+    },
+    "Endpoint": {
+     "Fn::GetAtt": [
+      "CdkDemoQueue32E7553B",
+      "Arn"
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "Cdkdemostack/CdkDemoQueue/CdkdemostackCdkDemoTopicAB9B8AEB/Resource"
+   }
+  },
+  "CdkDemoTopicCFC15E4B": {
+   "Type": "AWS::SNS::Topic",
+   "Metadata": {
+    "aws:cdk:path": "Cdkdemostack/CdkDemoTopic/Resource"
+   }
+  },
+  "sampleec2InstanceSecurityGroup4DE8B944": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "Cdkdemostack/sample-ec2/InstanceSecurityGroup",
+    "SecurityGroupEgress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow all outbound traffic by default",
+      "IpProtocol": "-1"
+     }
+    ],
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "Cdkdemostack/sample-ec2"
+     }
+    ],
+    "VpcId": "vpc-17049c7f"
+   },
+   "Metadata": {
+    "aws:cdk:path": "Cdkdemostack/sample-ec2/InstanceSecurityGroup/Resource"
+   }
+  },
+  "sampleec2InstanceRole94E90210": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "ec2.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "Cdkdemostack/sample-ec2"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "Cdkdemostack/sample-ec2/InstanceRole/Resource"
+   }
+  },
+  "sampleec2InstanceProfileB646EF37": {
+   "Type": "AWS::IAM::InstanceProfile",
+   "Properties": {
+    "Roles": [
+     {
+      "Ref": "sampleec2InstanceRole94E90210"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "Cdkdemostack/sample-ec2/InstanceProfile"
+   }
+  },
+  "sampleec2EF1A7D41": {
+   "Type": "AWS::EC2::Instance",
+   "Properties": {
+    "AvailabilityZone": "ca-central-1a",
+    "IamInstanceProfile": {
+     "Ref": "sampleec2InstanceProfileB646EF37"
+    },
+    "ImageId": "ami-1234",
+    "InstanceType": "t2.micro",
+    "SecurityGroupIds": [
+     {
+      "Fn::GetAtt": [
+       "sampleec2InstanceSecurityGroup4DE8B944",
+       "GroupId"
+      ]
+     }
+    ],
+    "SubnetId": "subnet-f4ff769c",
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "Cdkdemostack/sample-ec2"
+     }
+    ],
+    "UserData": {
+     "Fn::Base64": "#!/bin/bash"
+    }
+   },
+   "DependsOn": [
+    "sampleec2InstanceRole94E90210"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "Cdkdemostack/sample-ec2/Resource"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/12QQQvCMAyFf4v3LjIFxbMH8aabd5kxg8zZzqZVpPS/Ozsn6CV57+ULhMxgvoJ8Uj0kw/Mla/kEoXQVXlQfHYPcBMLekye1rvUgUt2ZlvH5DQcbleieL/1J0HLn2Og38eMPpmN8p0lERTiDsNXiKo2kSkJv2T031vgu7f4HIxoVV1cIhWnTaWMfxztram4pRlWQGG9xoD46Km3OBI1M7/kC8mX/gUaYM+u14ytBMfQXIH3WKR0BAAA="
+   },
+   "Metadata": {
+    "aws:cdk:path": "Cdkdemostack/CDKMetadata/Default"
+   }
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}
