@@ -1,0 +1,10 @@
+{   
+   "application": "sample",
+    "dept":       "finance", 
+    "kms_arn":    "arn:aws:kms:ca-central-1:456456010743:key/ce3ead96-3ffb-43b0-a4f3-33bd3289906c",
+    "tags" : {
+       "appID": "3333",
+       "app_Name": "demo-app",
+       "Managed_by": "Platform-Team"
+         }
+        }

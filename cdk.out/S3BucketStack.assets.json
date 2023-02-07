@@ -1,0 +1,20 @@
+{
+  "version": "29.0.0",
+  "files": {
+    "d950ba9d6234e39fbef9804c6951f1f5739f256744e59710f54e5c1bac170e74": {
+      "source": {
+        "path": "S3BucketStack.template.json",
+        "packaging": "file"
+      },
+      "destinations": {
+        "456456010743-ca-central-1": {
+          "bucketName": "cdk-hnb659fds-assets-456456010743-ca-central-1",
+          "objectKey": "d950ba9d6234e39fbef9804c6951f1f5739f256744e59710f54e5c1bac170e74.json",
+          "region": "ca-central-1",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::456456010743:role/cdk-hnb659fds-file-publishing-role-456456010743-ca-central-1"
+        }
+      }
+    }
+  },
+  "dockerImages": {}
+}

@@ -4,338 +4,184 @@
     "id": "App",
     "path": "",
     "children": {
-      "Tree": {
-        "id": "Tree",
-        "path": "Tree",
-        "constructInfo": {
-          "fqn": "constructs.Construct",
-          "version": "10.1.104"
-        }
-      },
-      "Cdkdemostack": {
-        "id": "Cdkdemostack",
-        "path": "Cdkdemostack",
+      "S3BucketStack": {
+        "id": "S3BucketStack",
+        "path": "S3BucketStack",
         "children": {
-          "CdkDemoQueue": {
-            "id": "CdkDemoQueue",
-            "path": "Cdkdemostack/CdkDemoQueue",
+          "exampleBucket1": {
+            "id": "exampleBucket1",
+            "path": "S3BucketStack/exampleBucket1",
             "children": {
-              "Resource": {
-                "id": "Resource",
-                "path": "Cdkdemostack/CdkDemoQueue/Resource",
-                "attributes": {
-                  "aws:cdk:cloudformation:type": "AWS::SQS::Queue",
-                  "aws:cdk:cloudformation:props": {
-                    "visibilityTimeout": 300
+              "Key": {
+                "id": "Key",
+                "path": "S3BucketStack/exampleBucket1/Key",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "S3BucketStack/exampleBucket1/Key/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::KMS::Key",
+                      "aws:cdk:cloudformation:props": {
+                        "keyPolicy": {
+                          "Statement": [
+                            {
+                              "Action": "kms:*",
+                              "Effect": "Allow",
+                              "Principal": {
+                                "AWS": "arn:aws:iam::456456010743:root"
+                              },
+                              "Resource": "*"
+                            },
+                            {
+                              "Action": [
+                                "kms:Decrypt",
+                                "kms:DescribeKey"
+                              ],
+                              "Effect": "Allow",
+                              "Principal": {
+                                "AWS": "arn:aws:iam::456456010743:root"
+                              },
+                              "Resource": "*"
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        },
+                        "description": "Created by S3BucketStack/exampleBucket1"
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_kms.CfnKey",
+                      "version": "2.63.0"
+                    }
                   }
                 },
                 "constructInfo": {
-                  "fqn": "aws-cdk-lib.aws_sqs.CfnQueue",
-                  "version": "2.39.1"
+                  "fqn": "aws-cdk-lib.aws_kms.Key",
+                  "version": "2.63.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "S3BucketStack/exampleBucket1/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::S3::Bucket",
+                  "aws:cdk:cloudformation:props": {
+                    "bucketEncryption": {
+                      "serverSideEncryptionConfiguration": [
+                        {
+                          "serverSideEncryptionByDefault": {
+                            "sseAlgorithm": "aws:kms",
+                            "kmsMasterKeyId": {
+                              "Fn::GetAtt": [
+                                "exampleBucket1Key2FC7386A",
+                                "Arn"
+                              ]
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    "bucketName": "undefined-undefined-bucket1",
+                    "ownershipControls": {
+                      "rules": [
+                        {
+                          "objectOwnership": "BucketOwnerEnforced"
+                        }
+                      ]
+                    },
+                    "publicAccessBlockConfiguration": {
+                      "blockPublicAcls": true,
+                      "blockPublicPolicy": true,
+                      "ignorePublicAcls": true,
+                      "restrictPublicBuckets": true
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3.CfnBucket",
+                  "version": "2.63.0"
                 }
               },
               "Policy": {
                 "id": "Policy",
-                "path": "Cdkdemostack/CdkDemoQueue/Policy",
+                "path": "S3BucketStack/exampleBucket1/Policy",
                 "children": {
                   "Resource": {
                     "id": "Resource",
-                    "path": "Cdkdemostack/CdkDemoQueue/Policy/Resource",
+                    "path": "S3BucketStack/exampleBucket1/Policy/Resource",
                     "attributes": {
-                      "aws:cdk:cloudformation:type": "AWS::SQS::QueuePolicy",
+                      "aws:cdk:cloudformation:type": "AWS::S3::BucketPolicy",
                       "aws:cdk:cloudformation:props": {
+                        "bucket": {
+                          "Ref": "exampleBucket1773DB73F"
+                        },
                         "policyDocument": {
                           "Statement": [
                             {
-                              "Action": "sqs:SendMessage",
-                              "Condition": {
-                                "ArnEquals": {
-                                  "aws:SourceArn": {
-                                    "Ref": "CdkDemoTopicCFC15E4B"
-                                  }
-                                }
-                              },
+                              "Action": [
+                                "s3:GetBucket*",
+                                "s3:GetObject*",
+                                "s3:List*"
+                              ],
                               "Effect": "Allow",
                               "Principal": {
-                                "Service": "sns.amazonaws.com"
+                                "AWS": "arn:aws:iam::456456010743:root"
                               },
-                              "Resource": {
-                                "Fn::GetAtt": [
-                                  "CdkDemoQueue32E7553B",
-                                  "Arn"
-                                ]
-                              }
+                              "Resource": [
+                                {
+                                  "Fn::GetAtt": [
+                                    "exampleBucket1773DB73F",
+                                    "Arn"
+                                  ]
+                                },
+                                {
+                                  "Fn::Join": [
+                                    "",
+                                    [
+                                      {
+                                        "Fn::GetAtt": [
+                                          "exampleBucket1773DB73F",
+                                          "Arn"
+                                        ]
+                                      },
+                                      "/*"
+                                    ]
+                                  ]
+                                }
+                              ]
                             }
                           ],
                           "Version": "2012-10-17"
-                        },
-                        "queues": [
-                          {
-                            "Ref": "CdkDemoQueue32E7553B"
-                          }
-                        ]
-                      }
-                    },
-                    "constructInfo": {
-                      "fqn": "aws-cdk-lib.aws_sqs.CfnQueuePolicy",
-                      "version": "2.39.1"
-                    }
-                  }
-                },
-                "constructInfo": {
-                  "fqn": "aws-cdk-lib.aws_sqs.QueuePolicy",
-                  "version": "2.39.1"
-                }
-              },
-              "CdkdemostackCdkDemoTopicAB9B8AEB": {
-                "id": "CdkdemostackCdkDemoTopicAB9B8AEB",
-                "path": "Cdkdemostack/CdkDemoQueue/CdkdemostackCdkDemoTopicAB9B8AEB",
-                "children": {
-                  "Resource": {
-                    "id": "Resource",
-                    "path": "Cdkdemostack/CdkDemoQueue/CdkdemostackCdkDemoTopicAB9B8AEB/Resource",
-                    "attributes": {
-                      "aws:cdk:cloudformation:type": "AWS::SNS::Subscription",
-                      "aws:cdk:cloudformation:props": {
-                        "protocol": "sqs",
-                        "topicArn": {
-                          "Ref": "CdkDemoTopicCFC15E4B"
-                        },
-                        "endpoint": {
-                          "Fn::GetAtt": [
-                            "CdkDemoQueue32E7553B",
-                            "Arn"
-                          ]
                         }
                       }
                     },
                     "constructInfo": {
-                      "fqn": "aws-cdk-lib.aws_sns.CfnSubscription",
-                      "version": "2.39.1"
+                      "fqn": "aws-cdk-lib.aws_s3.CfnBucketPolicy",
+                      "version": "2.63.0"
                     }
                   }
                 },
                 "constructInfo": {
-                  "fqn": "aws-cdk-lib.aws_sns.Subscription",
-                  "version": "2.39.1"
+                  "fqn": "aws-cdk-lib.aws_s3.BucketPolicy",
+                  "version": "2.63.0"
                 }
               }
             },
             "constructInfo": {
-              "fqn": "aws-cdk-lib.aws_sqs.Queue",
-              "version": "2.39.1"
-            }
-          },
-          "CdkDemoTopic": {
-            "id": "CdkDemoTopic",
-            "path": "Cdkdemostack/CdkDemoTopic",
-            "children": {
-              "Resource": {
-                "id": "Resource",
-                "path": "Cdkdemostack/CdkDemoTopic/Resource",
-                "attributes": {
-                  "aws:cdk:cloudformation:type": "AWS::SNS::Topic",
-                  "aws:cdk:cloudformation:props": {}
-                },
-                "constructInfo": {
-                  "fqn": "aws-cdk-lib.aws_sns.CfnTopic",
-                  "version": "2.39.1"
-                }
-              }
-            },
-            "constructInfo": {
-              "fqn": "aws-cdk-lib.aws_sns.Topic",
-              "version": "2.39.1"
-            }
-          },
-          "vpc": {
-            "id": "vpc",
-            "path": "Cdkdemostack/vpc",
-            "children": {
-              "PublicSubnet1": {
-                "id": "PublicSubnet1",
-                "path": "Cdkdemostack/vpc/PublicSubnet1",
-                "constructInfo": {
-                  "fqn": "aws-cdk-lib.Resource",
-                  "version": "2.39.1"
-                }
-              },
-              "PublicSubnet2": {
-                "id": "PublicSubnet2",
-                "path": "Cdkdemostack/vpc/PublicSubnet2",
-                "constructInfo": {
-                  "fqn": "aws-cdk-lib.Resource",
-                  "version": "2.39.1"
-                }
-              },
-              "PublicSubnet3": {
-                "id": "PublicSubnet3",
-                "path": "Cdkdemostack/vpc/PublicSubnet3",
-                "constructInfo": {
-                  "fqn": "aws-cdk-lib.Resource",
-                  "version": "2.39.1"
-                }
-              }
-            },
-            "constructInfo": {
-              "fqn": "aws-cdk-lib.Resource",
-              "version": "2.39.1"
-            }
-          },
-          "sample-ec2": {
-            "id": "sample-ec2",
-            "path": "Cdkdemostack/sample-ec2",
-            "children": {
-              "InstanceSecurityGroup": {
-                "id": "InstanceSecurityGroup",
-                "path": "Cdkdemostack/sample-ec2/InstanceSecurityGroup",
-                "children": {
-                  "Resource": {
-                    "id": "Resource",
-                    "path": "Cdkdemostack/sample-ec2/InstanceSecurityGroup/Resource",
-                    "attributes": {
-                      "aws:cdk:cloudformation:type": "AWS::EC2::SecurityGroup",
-                      "aws:cdk:cloudformation:props": {
-                        "groupDescription": "Cdkdemostack/sample-ec2/InstanceSecurityGroup",
-                        "securityGroupEgress": [
-                          {
-                            "cidrIp": "0.0.0.0/0",
-                            "description": "Allow all outbound traffic by default",
-                            "ipProtocol": "-1"
-                          }
-                        ],
-                        "tags": [
-                          {
-                            "key": "Name",
-                            "value": "Cdkdemostack/sample-ec2"
-                          }
-                        ],
-                        "vpcId": "vpc-17049c7f"
-                      }
-                    },
-                    "constructInfo": {
-                      "fqn": "aws-cdk-lib.aws_ec2.CfnSecurityGroup",
-                      "version": "2.39.1"
-                    }
-                  }
-                },
-                "constructInfo": {
-                  "fqn": "aws-cdk-lib.aws_ec2.SecurityGroup",
-                  "version": "2.39.1"
-                }
-              },
-              "InstanceRole": {
-                "id": "InstanceRole",
-                "path": "Cdkdemostack/sample-ec2/InstanceRole",
-                "children": {
-                  "Resource": {
-                    "id": "Resource",
-                    "path": "Cdkdemostack/sample-ec2/InstanceRole/Resource",
-                    "attributes": {
-                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
-                      "aws:cdk:cloudformation:props": {
-                        "assumeRolePolicyDocument": {
-                          "Statement": [
-                            {
-                              "Action": "sts:AssumeRole",
-                              "Effect": "Allow",
-                              "Principal": {
-                                "Service": "ec2.amazonaws.com"
-                              }
-                            }
-                          ],
-                          "Version": "2012-10-17"
-                        },
-                        "tags": [
-                          {
-                            "key": "Name",
-                            "value": "Cdkdemostack/sample-ec2"
-                          }
-                        ]
-                      }
-                    },
-                    "constructInfo": {
-                      "fqn": "aws-cdk-lib.aws_iam.CfnRole",
-                      "version": "2.39.1"
-                    }
-                  }
-                },
-                "constructInfo": {
-                  "fqn": "aws-cdk-lib.aws_iam.Role",
-                  "version": "2.39.1"
-                }
-              },
-              "InstanceProfile": {
-                "id": "InstanceProfile",
-                "path": "Cdkdemostack/sample-ec2/InstanceProfile",
-                "attributes": {
-                  "aws:cdk:cloudformation:type": "AWS::IAM::InstanceProfile",
-                  "aws:cdk:cloudformation:props": {
-                    "roles": [
-                      {
-                        "Ref": "sampleec2InstanceRole94E90210"
-                      }
-                    ]
-                  }
-                },
-                "constructInfo": {
-                  "fqn": "aws-cdk-lib.aws_iam.CfnInstanceProfile",
-                  "version": "2.39.1"
-                }
-              },
-              "Resource": {
-                "id": "Resource",
-                "path": "Cdkdemostack/sample-ec2/Resource",
-                "attributes": {
-                  "aws:cdk:cloudformation:type": "AWS::EC2::Instance",
-                  "aws:cdk:cloudformation:props": {
-                    "availabilityZone": "ca-central-1a",
-                    "iamInstanceProfile": {
-                      "Ref": "sampleec2InstanceProfileB646EF37"
-                    },
-                    "imageId": "ami-1234",
-                    "instanceType": "t2.micro",
-                    "securityGroupIds": [
-                      {
-                        "Fn::GetAtt": [
-                          "sampleec2InstanceSecurityGroup4DE8B944",
-                          "GroupId"
-                        ]
-                      }
-                    ],
-                    "subnetId": "subnet-f4ff769c",
-                    "tags": [
-                      {
-                        "key": "Name",
-                        "value": "Cdkdemostack/sample-ec2"
-                      }
-                    ],
-                    "userData": {
-                      "Fn::Base64": "#!/bin/bash"
-                    }
-                  }
-                },
-                "constructInfo": {
-                  "fqn": "aws-cdk-lib.aws_ec2.CfnInstance",
-                  "version": "2.39.1"
-                }
-              }
-            },
-            "constructInfo": {
-              "fqn": "aws-cdk-lib.aws_ec2.Instance",
-              "version": "2.39.1"
+              "fqn": "aws-cdk-lib.aws_s3.Bucket",
+              "version": "2.63.0"
             }
           },
           "CDKMetadata": {
             "id": "CDKMetadata",
-            "path": "Cdkdemostack/CDKMetadata",
+            "path": "S3BucketStack/CDKMetadata",
             "children": {
               "Default": {
                 "id": "Default",
-                "path": "Cdkdemostack/CDKMetadata/Default",
+                "path": "S3BucketStack/CDKMetadata/Default",
                 "constructInfo": {
                   "fqn": "aws-cdk-lib.CfnResource",
-                  "version": "2.39.1"
+                  "version": "2.63.0"
                 }
               }
             },
@@ -343,17 +189,41 @@
               "fqn": "constructs.Construct",
               "version": "10.1.104"
             }
+          },
+          "BootstrapVersion": {
+            "id": "BootstrapVersion",
+            "path": "S3BucketStack/BootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnParameter",
+              "version": "2.63.0"
+            }
+          },
+          "CheckBootstrapVersion": {
+            "id": "CheckBootstrapVersion",
+            "path": "S3BucketStack/CheckBootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnRule",
+              "version": "2.63.0"
+            }
           }
         },
         "constructInfo": {
           "fqn": "aws-cdk-lib.Stack",
-          "version": "2.39.1"
+          "version": "2.63.0"
+        }
+      },
+      "Tree": {
+        "id": "Tree",
+        "path": "Tree",
+        "constructInfo": {
+          "fqn": "constructs.Construct",
+          "version": "10.1.104"
         }
       }
     },
     "constructInfo": {
       "fqn": "aws-cdk-lib.App",
-      "version": "2.39.1"
+      "version": "2.63.0"
     }
   }
 }
