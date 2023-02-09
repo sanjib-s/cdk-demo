@@ -30,9 +30,9 @@ export class DemoAppS3Stack extends Stack {
     s3Bucket.grantRead(new iam.AccountRootPrincipal());
 
     //Stack Outputs
-    new CfnOutput(this, 'exampleBucketArn', {
-      value: exampleBucket.bucketArn,
-      exportName: '${context.application}-${context.environment}-exampleBucket',
-    });
+    //new CfnOutput(this, 'exampleBucketArn', {
+    //  value: exampleBucket.bucketArn,
+    //  exportName: '${context.application}-${context.environment}-exampleBucket',
+    //});
   }
 }
