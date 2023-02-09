@@ -1,6 +1,7 @@
 import {Stack, StackProps, CfnOutput } from 'aws-cdk-lib';
 import * as iam from 'aws-cdk-lib/aws-iam';
 import * as kms from 'aws-cdk-lib/aws-kms';
+import { CfnDisk } from 'aws-cdk-lib/aws-lightsail';
 import * as s3 from 'aws-cdk-lib/aws-s3';
 import * as ssm from 'aws-cdk-lib/aws-ssm';
 import { Construct } from 'constructs';
@@ -30,13 +31,15 @@ export class DemoAppS3Stack extends Stack {
 
     DemoApps3Bucket.grantRead(new iam.AccountRootPrincipal());
 
-    //Stack Outputs
-    new CfnOutput(this, 'exampleBucketArn', {
+    const s3BucketArn = DemoApps3Bucket.bucketArn;
+    console.log('bucketArn', s3BucketArn);
 
-      value:  DemoApps3Bucket.bucketArn,
-     
-     exportName: '${context?.application}-${context?.environment}-examplebucket',
-    });
+    //S3 bucket ARN Output
+
+    new CfnOutput(this, 'exampleBucketArn', {
+      value: s3BucketArn,
+      description: 'arn of demo app s3 bucket',
+    })
 
   }
 } 
