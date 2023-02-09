@@ -35,7 +35,7 @@ export class DemoAppS3Stack extends Stack {
 
       value:  DemoApps3Bucket.bucketArn,
      
-     exportName: '${context.application}-${context.environment}-examplebucket',
+     exportName: '${context?.application}-${context?.environment}-examplebucket',
     });
 
   }
