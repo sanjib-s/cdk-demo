@@ -12,7 +12,7 @@ import { CDKContext } from '../common/types';
 //}
 
 export class DemoAppS3Stack extends Stack {
-  constructor(scope: Construct, id: string, props?: StackProps, context: CDKContext) {
+  constructor(scope: Construct, id: string, props?: StackProps, context?: CDKContext) {
     super(scope, id, props);
 
     //accessing env variable 
@@ -21,7 +21,7 @@ export class DemoAppS3Stack extends Stack {
     var deployment_Env = process.env.deployment_Env;
 
     const s3Bucket = new s3.Bucket(this, 'exampleBucket', {
-      bucketName: `${context.environment}-${context.dept}-${context.application}-${context.accountNumber}`,
+      bucketName: `${context?.environment}-${context?.dept}-${context?.application}-${context?.accountNumber}`,
       objectOwnership: s3.ObjectOwnership.BUCKET_OWNER_ENFORCED,
       blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
       encryptionKey: new kms.Key(this, 's3BucketKMSKey'),
