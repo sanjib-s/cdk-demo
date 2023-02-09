@@ -2,6 +2,7 @@ import {Stack, StackProps, CfnOutput } from 'aws-cdk-lib';
 import * as iam from 'aws-cdk-lib/aws-iam';
 import * as kms from 'aws-cdk-lib/aws-kms';
 import * as s3 from 'aws-cdk-lib/aws-s3';
+import * as ssm from 'aws-cdk-lib/aws-ssm';
 import { Construct } from 'constructs';
 
 // Types
@@ -34,7 +35,8 @@ export class DemoAppS3Stack extends Stack {
 
       value:  DemoApps3Bucket.bucketArn,
      
-     exportName: '${context.application}-${context.environment}-exampleBucket',
+     exportName: '${context.application}-${context.environment}-examplebucket',
     });
+
   }
 } 
