@@ -1,34 +1,51 @@
 #!/usr/bin/env node
 import * as cdk from 'aws-cdk-lib';
 import * as fs from 'fs';
-//import { CdkDemoStack } from '../lib/cdk-ec2-sqs-sns';
-import { S3BucketStack } from '../lib/s3';
+import { DemoAppS3Stack} from '../lib/s3-bucket';
 
-const envcanada = {account: '456456010743', region: 'ca-central-1' };
+import { CDKContext } from '../common/types.d';
+import gitBranch from 'git-branch';
 
-const envConfig = getConfig();
+// Get CDK Context based on git branch
+export const getContext = async (app: cdk.App): Promise<CDKContext> => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const currentBranch = await gitBranch();
 
-const app = new cdk.App();
+      const environment = app.node.tryGetContext('environments').find((e: any) => e.branchName === currentBranch);
 
+      const globals = app.node.tryGetContext('globals');
 
-//new CdkDemoStack(app, 'Cdkdemostack' ,{env: envcanada});
-new S3BucketStack(app, 'S3BucketStack' ,{ env:envcanada, envConfig });
+      return resolve({ ...globals, ...environment });
+    } catch (error) {
+      console.error(error);
+      return reject();
+    }
+  });
+};
 
-function getConfig() {
-    let parsedConfig;
-    let deployment_Env = String(process.env.deployment_Env).toLocaleLowerCase();
-    if (!deployment_Env) {
-        throw new Error('Please set the deployment env');
-                   }
-     switch (deployment_Env) {
-        case 'sandbox':
-        case 'sbx':
-            parsedConfig = JSON.parse(fs.readFileSync(`./config/sandbox.json`, 'utf8'));           
-          break;
-        case 'production':
-        case 'prod':
-                parsedConfig = JSON.parse(fs.readFileSync(`./config/production.json`, 'utf8'));           
-        break;
-}
-return parsedConfig;
-}
+// Create Stacks
+const createStacks = async () => {
+  try {
+    const app = new cdk.App();
+    const context = await getContext(app);
+
+    const tags: any = {
+      Environment: context.environment,
+    };
+
+    const stackProps: cdk.StackProps = {
+      env: {
+        region: context.region,
+        account: context.accountNumber,
+      },
+      tags,
+    };
+
+    const S3Stack = new DemoAppS3Stack(app, `${context.application}-cdk-base-stack-${context.environment}`, stackProps, context);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+createStacks();
