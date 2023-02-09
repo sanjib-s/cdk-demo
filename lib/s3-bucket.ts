@@ -5,7 +5,7 @@ import * as s3 from 'aws-cdk-lib/aws-s3';
 import { Construct } from 'constructs';
 
 // Types
-import { CDKContext } from '../common/types.d';
+import { CDKContext } from '../common/types';
 
 //interface s3StackProps extends cdk.StackProps {
 //   readonly envConfig: any;

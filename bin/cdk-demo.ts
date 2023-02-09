@@ -3,7 +3,7 @@ import * as cdk from 'aws-cdk-lib';
 import * as fs from 'fs';
 import { DemoAppS3Stack} from '../lib/s3-bucket';
 
-import { CDKContext } from '../common/types.d';
+import { CDKContext } from '../common/types';
 import gitBranch from 'git-branch';
 
 // Get CDK Context based on git branch
@@ -39,10 +39,11 @@ const createStacks = async () => {
         region: context.region,
         account: context.accountNumber,
       },
+      stackName: '${context.application}-${context.environment}',
       tags,
     };
 
-    const S3Stack = new DemoAppS3Stack(app, `${context.application}-cdk-base-stack-${context.environment}`, stackProps, context);
+    new DemoAppS3Stack(app, `${context.application}-cdk-base-stack-${context.environment}`, stackProps, context);
   } catch (error) {
     console.error(error);
   }
