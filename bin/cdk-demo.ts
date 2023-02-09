@@ -39,7 +39,7 @@ const createStacks = async () => {
         region: context.region,
         account: context.accountNumber,
       },
-      stackName: '${context?.application}-${context?.environment}',
+     // stackName: '${context?.application}-${context?.environment}',
       tags,
     };
 
