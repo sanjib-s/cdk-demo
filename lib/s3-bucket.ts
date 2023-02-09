@@ -17,22 +17,24 @@ export class DemoAppS3Stack extends Stack {
 
     //accessing env variable 
 
-    console.log('deployment_Env', process.env.deployment_Env)
-    var deployment_Env = process.env.deployment_Env;
+    //console.log('deployment_Env', process.env.deployment_Env)
+    //var deployment_Env = process.env.deployment_Env;
 
-    const s3Bucket = new s3.Bucket(this, 'exampleBucket', {
+    const DemoApps3Bucket = new s3.Bucket(this, 'exampleBucket', {
       bucketName: `${context?.environment}-${context?.dept}-${context?.application}-${context?.accountNumber}`,
       objectOwnership: s3.ObjectOwnership.BUCKET_OWNER_ENFORCED,
       blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
       encryptionKey: new kms.Key(this, 's3BucketKMSKey'),
     });
 
-    s3Bucket.grantRead(new iam.AccountRootPrincipal());
+    DemoApps3Bucket.grantRead(new iam.AccountRootPrincipal());
 
     //Stack Outputs
-    //new CfnOutput(this, 'exampleBucketArn', {
-    //  value: exampleBucket.bucketArn,
-    //  exportName: '${context.application}-${context.environment}-exampleBucket',
-    //});
+    new CfnOutput(this, 'exampleBucketArn', {
+
+      value:  DemoApps3Bucket.bucketArn,
+     
+     exportName: '${context.application}-${context.environment}-exampleBucket',
+    });
   }
-}
+} 
