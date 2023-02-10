@@ -44,8 +44,11 @@ export class DemoAppS3Stack extends Stack {
     new ssm.StringParameter(this, 'S3buccket-arn-Parameter', {
       allowedPattern: '.*',
       description: 'S3 bucket ARN',
-      parameterName: '/${context?.environment}/S3bucket/${context?.application}',
-      stringValue: 's3BucketArn',
+      //parameterName: '/${context?.environment}/S3bucket/${context?.application}',
+      //stringValue: 's3BucketArn',
+      parameterName: 's3bucket',
+      stringValue: 'arn:aws:s3:::dev-finance-demomapp-456456010743',
+
       tier: ssm.ParameterTier.ADVANCED,
     });
 
