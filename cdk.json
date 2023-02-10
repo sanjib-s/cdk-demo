@@ -38,15 +38,30 @@
       "aws",
       "aws-cn"
     ],
-    "environment-dev":{
-    "application": "sample",
-    "dept":       "finance", 
-    "kms_arn":    "arn:aws:kms:ca-central-1:456456010743:key/ce3ead96-3ffb-43b0-a4f3-33bd3289906c"
-
+    "globals": {
+      "ProjectName": "cdk-demo"
     },
+    "environments": [
+      {
+        "environment": "dev",
+        "branchName": "development",
+        "accountNumber": "xxxxx",
+        "region": "ca-central-1",
+        "kms_arn": "arn:aws:kms:ca-central-1:xxx:key/ce3ead96-3ffb-43b0-a4f3-33bd3289906c",
+        "dept": "finance",
+        "application": "demomapp"
+      },
 
-    "environment-prod":{
+      {
+        "environment": "prod",
+        "branchName": "production",
+        "accountNumber": "xxxxxx",
+        "region": "us-east-1",
+        "kms_arn": "arn:aws:kms:ca-central-1:xxxxx:key/ce3ead96-3ffb-43b0-a4f3-33bd3289906c",
+        "dept": "Finance",
+        "application": "demomapp"
+      }
 
-    }
+    ]
   }
 }
