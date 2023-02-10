@@ -20,9 +20,12 @@ Pre-requisite
 
 This CDK project covers below Production use cases
 
-	· AWS Services deployment across environment (Development /Production etc).
-	· Ability to define variable based on environment
-	· Output value of each deployed resource
+    · AWS Services deployment across environment (Development /Production etc).
+    · Ability to define variable based on environment
+    · Output value of each deployed resource
+    . All output get stored in AWS Parameter store which help hierarchical storage for configuration data management
+
+
 
 Coding Standards followed
 
