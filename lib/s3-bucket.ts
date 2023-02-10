@@ -41,5 +41,13 @@ export class DemoAppS3Stack extends Stack {
       description: 'arn of demo app s3 bucket',
     })
 
+    new ssm.StringParameter(this, 'S3buccket-arn-Parameter', {
+      allowedPattern: '.*',
+      description: 'S3 bucket ARN',
+      parameterName: '/${context?.environment}/S3bucket/${context?.application}',
+      stringValue: 's3BucketArn',
+      tier: ssm.ParameterTier.ADVANCED,
+    });
+
   }
 } 
