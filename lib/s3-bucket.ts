@@ -46,7 +46,7 @@ export class DemoAppS3Stack extends Stack {
       description: 'S3 bucket ARN',
       //parameterName: '/${context?.environment}/S3bucket/${context?.application}',
       //stringValue: 's3BucketArn',
-      parameterName: 's3bucket',
+      parameterName: '/dev/s3bucket',
       stringValue: s3BucketArn,
 
       tier: ssm.ParameterTier.ADVANCED,
