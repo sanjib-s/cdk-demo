@@ -45,9 +45,9 @@
       {
         "environment": "dev",
         "branchName": "development",
-        "accountNumber": "456456010743",
+        "accountNumber": "xxxxxx",
         "region": "ca-central-1",
-        "kms_arn": "arn:aws:kms:ca-central-1:456456010743:key/ce3ead96-3ffb-43b0-a4f3-33bd3289906c",
+        "kms_arn": "arn:aws:kms:ca-central-1:xxxxx:key/ce3ead96-3ffb-43b0-a4f3-33bd3289906c",
         "dept": "finance",
         "application": "demomapp"
       },
@@ -55,9 +55,9 @@
       {
         "environment": "prod",
         "branchName": "production",
-        "accountNumber": "456456010743",
+        "accountNumber": "xxxxxx",
         "region": "us-east-1",
-        "kms_arn": "arn:aws:kms:ca-central-1:456456010743:key/ce3ead96-3ffb-43b0-a4f3-33bd3289906c",
+        "kms_arn": "arn:aws:kms:ca-central-1:xxxxxx:key/ce3ead96-3ffb-43b0-a4f3-33bd3289906c",
         "dept": "Finance",
         "application": "demomapp"
       }
